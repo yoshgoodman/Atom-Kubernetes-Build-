@@ -1,0 +1,45 @@
+cmd: "kubectl"
+name: "kubectl apply file"
+args:
+  - apply
+  - -f
+  - "{FILE_ACTIVE}"
+sh: true
+cwd: "{FILE_ACTIVE_PATH}"
+errorMatch:
+  - ^error$
+atomCommandName: kubectl:apply-file
+targets:
+  kubectl delete file:
+      cmd: "kubectl"
+      args:
+          - delete
+          - -f
+          - "{FILE_ACTIVE}"
+      sh: true
+      atomCommandName: kubectl:delete-file
+      cwd: "{FILE_ACTIVE_PATH}"
+      errorMatch:
+        - ^error$
+  kubectl apply folder:
+      cmd: "kubectl"
+      args:
+          - apply
+          - -f
+          - "."
+      sh: true
+      atomCommandName: kubectl:apply-folder
+      cwd: "{FILE_ACTIVE_PATH}"
+      errorMatch:
+        - ^error$
+  kubectl delete folder:
+      cmd: "kubectl"
+      args:
+          - delete
+          - -f
+          - "."
+      sh: true
+      atomCommandName: kubectl:delete-folder
+      cwd: "{FILE_ACTIVE_PATH}"
+      errorMatch:
+        - ^error$
